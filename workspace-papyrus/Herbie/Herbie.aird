@@ -11,4 +11,5 @@
   <semanticResources>pathmap://SysML16_PROFILES/SysML.profile.uml</semanticResources>
   <semanticResources>pathmap://SysML16_LIBRARIES/SysML-Standard-Library.notation</semanticResources>
   <semanticResources>pathmap://SysML16_LIBRARIES/SysML-Standard-Library.di</semanticResources>
+  <semanticResources>platform:/plugin/org.eclipse.papyrus.sysml16.nattable.requirement/resources/requirement.nattableconfiguration</semanticResources>
 </viewpoint:DAnalysis>

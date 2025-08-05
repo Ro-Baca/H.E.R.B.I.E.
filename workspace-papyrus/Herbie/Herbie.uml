@@ -9,22 +9,25 @@
     </packageImport>
     <packagedElement xmi:type="uml:Package" xmi:id="_Kz4n8HDpEfCsjODSU2HVCA" name="Requirements">
       <packagedElement xmi:type="uml:Package" xmi:id="_c-L1MHDpEfCsjODSU2HVCA" name="Concept">
-        <packagedElement xmi:type="uml:Class" xmi:id="_GrSlcHDqEfCsjODSU2HVCA" name="Requirement1"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_HdNKkHDqEfCsjODSU2HVCA" name="CopyOf_Requirement1_1"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_HgwN0HDqEfCsjODSU2HVCA" name="CopyOf_Requirement1_2"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_HjvQYHDqEfCsjODSU2HVCA" name="CopyOf_Requirement1_3"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_HmRnAHDqEfCsjODSU2HVCA" name="CopyOf_Requirement1_4"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_Ho2Z4HDqEfCsjODSU2HVCA" name="CopyOf_Requirement1_5"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_Hrbz0HDqEfCsjODSU2HVCA" name="CopyOf_Requirement1_6"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_Ht-xgHDqEfCsjODSU2HVCA" name="CopyOf_Requirement1_7"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_HxAQUHDqEfCsjODSU2HVCA" name="CopyOf_Requirement1_8"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_HzotkHDqEfCsjODSU2HVCA" name="CopyOf_Requirement1_9"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_H2M5YHDqEfCsjODSU2HVCA" name="CopyOf_Requirement1_10"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_H4y6YHDqEfCsjODSU2HVCA" name="CopyOf_Requirement1_11"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_H7VRAHDqEfCsjODSU2HVCA" name="CopyOf_Requirement1_12"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_H9plMHDqEfCsjODSU2HVCA" name="CopyOf_Requirement1_13"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_IAbzcHDqEfCsjODSU2HVCA" name="CopyOf_Requirement1_14"/>
-        <packagedElement xmi:type="uml:Class" xmi:id="_IC5RkHDqEfCsjODSU2HVCA" name="CopyOf_Requirement1_15"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_GrSlcHDqEfCsjODSU2HVCA" name="Temperature monitoring"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_52Li4HGnEfCxjP9WnU8rpw" name="Moisture monitoring"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_59g58HGnEfCxjP9WnU8rpw" name="Sunlight monitoring"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_HdNKkHDqEfCsjODSU2HVCA" name="Critical thresholds"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_HgwN0HDqEfCsjODSU2HVCA" name="Audible alert generation"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_hC9EYHGoEfCxjP9WnU8rpw" name="Visual alert generation"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_HjvQYHDqEfCsjODSU2HVCA" name="Multicolor LED"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_HmRnAHDqEfCsjODSU2HVCA" name="Graphic interface"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_Ho2Z4HDqEfCsjODSU2HVCA" name="Volume control"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_Gj59QHGpEfCxjP9WnU8rpw" name="Brightness control"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_Hrbz0HDqEfCsjODSU2HVCA" name="Local database"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_Ht-xgHDqEfCsjODSU2HVCA" name="Offline operation"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_HxAQUHDqEfCsjODSU2HVCA" name="Setting plant menu"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_rY354HGpEfCxjP9WnU8rpw" name="Setting notifications menu"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_HzotkHDqEfCsjODSU2HVCA" name="Physical power button"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_H2M5YHDqEfCsjODSU2HVCA" name="Digital manual"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_H4y6YHDqEfCsjODSU2HVCA" name="Emotional representation"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_H9plMHDqEfCsjODSU2HVCA" name="Accessible design"/>
+        <packagedElement xmi:type="uml:Class" xmi:id="_IAbzcHDqEfCsjODSU2HVCA" name="Data protection"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Package" xmi:id="_d6N_oHDpEfCsjODSU2HVCA" name="Logic">
         <packagedElement xmi:type="uml:Class" xmi:id="_iJHzkHDqEfCsjODSU2HVCA" name="LogReq1"/>
@@ -101,22 +104,20 @@
       <appliedProfile xmi:type="uml:Profile" href="pathmap://UML_PROFILES/Standard.profile.uml#_0"/>
     </profileApplication>
   </uml:Model>
-  <Requirements:Requirement xmi:id="_GrZ6MHDqEfCsjODSU2HVCA" base_NamedElement="_GrSlcHDqEfCsjODSU2HVCA" base_Class="_GrSlcHDqEfCsjODSU2HVCA"/>
-  <Requirements:Requirement xmi:id="_HdNKkXDqEfCsjODSU2HVCA" base_NamedElement="_HdNKkHDqEfCsjODSU2HVCA" base_Class="_HdNKkHDqEfCsjODSU2HVCA"/>
-  <Requirements:Requirement xmi:id="_Hgw04HDqEfCsjODSU2HVCA" base_NamedElement="_HgwN0HDqEfCsjODSU2HVCA" base_Class="_HgwN0HDqEfCsjODSU2HVCA"/>
-  <Requirements:Requirement xmi:id="_HjwegHDqEfCsjODSU2HVCA" base_NamedElement="_HjvQYHDqEfCsjODSU2HVCA" base_Class="_HjvQYHDqEfCsjODSU2HVCA"/>
-  <Requirements:Requirement xmi:id="_HmTcMHDqEfCsjODSU2HVCA" base_NamedElement="_HmRnAHDqEfCsjODSU2HVCA" base_Class="_HmRnAHDqEfCsjODSU2HVCA"/>
-  <Requirements:Requirement xmi:id="_Ho3A8HDqEfCsjODSU2HVCA" base_NamedElement="_Ho2Z4HDqEfCsjODSU2HVCA" base_Class="_Ho2Z4HDqEfCsjODSU2HVCA"/>
-  <Requirements:Requirement xmi:id="_HrdB8HDqEfCsjODSU2HVCA" base_NamedElement="_Hrbz0HDqEfCsjODSU2HVCA" base_Class="_Hrbz0HDqEfCsjODSU2HVCA"/>
-  <Requirements:Requirement xmi:id="_Ht__oHDqEfCsjODSU2HVCA" base_NamedElement="_Ht-xgHDqEfCsjODSU2HVCA" base_Class="_Ht-xgHDqEfCsjODSU2HVCA"/>
-  <Requirements:Requirement xmi:id="_HxA3YHDqEfCsjODSU2HVCA" base_NamedElement="_HxAQUHDqEfCsjODSU2HVCA" base_Class="_HxAQUHDqEfCsjODSU2HVCA"/>
-  <Requirements:Requirement xmi:id="_HzpUoHDqEfCsjODSU2HVCA" base_NamedElement="_HzotkHDqEfCsjODSU2HVCA" base_Class="_HzotkHDqEfCsjODSU2HVCA"/>
-  <Requirements:Requirement xmi:id="_H2OHgHDqEfCsjODSU2HVCA" base_NamedElement="_H2M5YHDqEfCsjODSU2HVCA" base_Class="_H2M5YHDqEfCsjODSU2HVCA"/>
-  <Requirements:Requirement xmi:id="_H40IgHDqEfCsjODSU2HVCA" base_NamedElement="_H4y6YHDqEfCsjODSU2HVCA" base_Class="_H4y6YHDqEfCsjODSU2HVCA"/>
-  <Requirements:Requirement xmi:id="_H7V4EHDqEfCsjODSU2HVCA" base_NamedElement="_H7VRAHDqEfCsjODSU2HVCA" base_Class="_H7VRAHDqEfCsjODSU2HVCA"/>
-  <Requirements:Requirement xmi:id="_H9qzUHDqEfCsjODSU2HVCA" base_NamedElement="_H9plMHDqEfCsjODSU2HVCA" base_Class="_H9plMHDqEfCsjODSU2HVCA"/>
-  <Requirements:Requirement xmi:id="_IAdBkHDqEfCsjODSU2HVCA" base_NamedElement="_IAbzcHDqEfCsjODSU2HVCA" base_Class="_IAbzcHDqEfCsjODSU2HVCA"/>
-  <Requirements:Requirement xmi:id="_IC6fsHDqEfCsjODSU2HVCA" base_NamedElement="_IC5RkHDqEfCsjODSU2HVCA" base_Class="_IC5RkHDqEfCsjODSU2HVCA"/>
+  <Requirements:Requirement xmi:id="_GrZ6MHDqEfCsjODSU2HVCA" base_NamedElement="_GrSlcHDqEfCsjODSU2HVCA" id="CL-01" text="The system must have sensors to measure the temperature levels in the plant." base_Class="_GrSlcHDqEfCsjODSU2HVCA"/>
+  <Requirements:Requirement xmi:id="_HdNKkXDqEfCsjODSU2HVCA" base_NamedElement="_HdNKkHDqEfCsjODSU2HVCA" id="CL-04" text="&#xD;&#xA;The system must compare the sensed values with defined ranges and detect conditions outside these." base_Class="_HdNKkHDqEfCsjODSU2HVCA"/>
+  <Requirements:Requirement xmi:id="_Hgw04HDqEfCsjODSU2HVCA" base_NamedElement="_HgwN0HDqEfCsjODSU2HVCA" id="CL-05" text="The system must emit an audible signal in critical conditions." base_Class="_HgwN0HDqEfCsjODSU2HVCA"/>
+  <Requirements:Requirement xmi:id="_HjwegHDqEfCsjODSU2HVCA" base_NamedElement="_HjvQYHDqEfCsjODSU2HVCA" id="CL-07" text="&#xD;&#xA;The system must include an RGB LED that expresses the state of the plant with different colors." base_Class="_HjvQYHDqEfCsjODSU2HVCA"/>
+  <Requirements:Requirement xmi:id="_HmTcMHDqEfCsjODSU2HVCA" base_NamedElement="_HmRnAHDqEfCsjODSU2HVCA" id="CL-08" text="The system must have an application to display information on the plant status." base_Class="_HmRnAHDqEfCsjODSU2HVCA"/>
+  <Requirements:Requirement xmi:id="_Ho3A8HDqEfCsjODSU2HVCA" base_NamedElement="_Ho2Z4HDqEfCsjODSU2HVCA" id="CL-09" text="The system must allow the user to adjust the sound volume." base_Class="_Ho2Z4HDqEfCsjODSU2HVCA"/>
+  <Requirements:Requirement xmi:id="_HrdB8HDqEfCsjODSU2HVCA" base_NamedElement="_Hrbz0HDqEfCsjODSU2HVCA" id="CL-11" text="The system must record the sensed values for the last 3 days." base_Class="_Hrbz0HDqEfCsjODSU2HVCA"/>
+  <Requirements:Requirement xmi:id="_Ht__oHDqEfCsjODSU2HVCA" base_NamedElement="_Ht-xgHDqEfCsjODSU2HVCA" id="CL-12" text="The system must operate without internet connection for essential functions." base_Class="_Ht-xgHDqEfCsjODSU2HVCA"/>
+  <Requirements:Requirement xmi:id="_HxA3YHDqEfCsjODSU2HVCA" base_NamedElement="_HxAQUHDqEfCsjODSU2HVCA" id="CL-13" text="The system must provide a menu to allow the usert to select the plant type and configure notifications." base_Class="_HxAQUHDqEfCsjODSU2HVCA"/>
+  <Requirements:Requirement xmi:id="_HzpUoHDqEfCsjODSU2HVCA" base_NamedElement="_HzotkHDqEfCsjODSU2HVCA" id="CL-15" text="The system must include a physical on/off button." base_Class="_HzotkHDqEfCsjODSU2HVCA"/>
+  <Requirements:Requirement xmi:id="_H2OHgHDqEfCsjODSU2HVCA" base_NamedElement="_H2M5YHDqEfCsjODSU2HVCA" id="CL-16" text="The system must provide an introductory guide for the user." base_Class="_H2M5YHDqEfCsjODSU2HVCA"/>
+  <Requirements:Requirement xmi:id="_H40IgHDqEfCsjODSU2HVCA" base_NamedElement="_H4y6YHDqEfCsjODSU2HVCA" id="CL-17" text="&#xD;&#xA;The system must represent simulated emotions using light and sound." base_Class="_H4y6YHDqEfCsjODSU2HVCA"/>
+  <Requirements:Requirement xmi:id="_H9qzUHDqEfCsjODSU2HVCA" base_NamedElement="_H9plMHDqEfCsjODSU2HVCA" id="CL-18" text="The system components must be easily accessible for maintenance." base_Class="_H9plMHDqEfCsjODSU2HVCA"/>
+  <Requirements:Requirement xmi:id="_IAdBkHDqEfCsjODSU2HVCA" base_NamedElement="_IAbzcHDqEfCsjODSU2HVCA" id="CL-19" text="The system must not collect or transmit personal information without consent." base_Class="_IAbzcHDqEfCsjODSU2HVCA"/>
   <Requirements:Requirement xmi:id="_iJJowHDqEfCsjODSU2HVCA" base_NamedElement="_iJHzkHDqEfCsjODSU2HVCA" base_Class="_iJHzkHDqEfCsjODSU2HVCA"/>
   <Requirements:Requirement xmi:id="_kbrsEHDqEfCsjODSU2HVCA" base_NamedElement="_kbp24HDqEfCsjODSU2HVCA" base_Class="_kbp24HDqEfCsjODSU2HVCA"/>
   <Requirements:Requirement xmi:id="_kfBT8HDqEfCsjODSU2HVCA" base_NamedElement="_kfAs4HDqEfCsjODSU2HVCA" base_Class="_kfAs4HDqEfCsjODSU2HVCA"/>
@@ -124,4 +125,9 @@
   <Requirements:Requirement xmi:id="_1b6S4HDqEfCsjODSU2HVCA" base_NamedElement="_1b4dsHDqEfCsjODSU2HVCA" base_Class="_1b4dsHDqEfCsjODSU2HVCA"/>
   <Requirements:Requirement xmi:id="_21LL4HDqEfCsjODSU2HVCA" base_NamedElement="_21J9wHDqEfCsjODSU2HVCA" base_Class="_21J9wHDqEfCsjODSU2HVCA"/>
   <Requirements:Requirement xmi:id="_24XCwHDqEfCsjODSU2HVCA" base_NamedElement="_24VNkHDqEfCsjODSU2HVCA" base_Class="_24VNkHDqEfCsjODSU2HVCA"/>
+  <Requirements:Requirement xmi:id="_52PNQHGnEfCxjP9WnU8rpw" base_NamedElement="_52Li4HGnEfCxjP9WnU8rpw" id="CL-02" text="The system must have sensors to measure soil moisture levels in the plant." base_Class="_52Li4HGnEfCxjP9WnU8rpw"/>
+  <Requirements:Requirement xmi:id="_59j9QHGnEfCxjP9WnU8rpw" base_NamedElement="_59g58HGnEfCxjP9WnU8rpw" id="CL-03" text="The system must have sensors to measure sunlight level in the plant." base_Class="_59g58HGnEfCxjP9WnU8rpw"/>
+  <Requirements:Requirement xmi:id="_hC-SgHGoEfCxjP9WnU8rpw" base_NamedElement="_hC9EYHGoEfCxjP9WnU8rpw" id="CL-06" text="The system must emit a visual signal in critical conditions." base_Class="_hC9EYHGoEfCxjP9WnU8rpw"/>
+  <Requirements:Requirement xmi:id="_Gj7LYHGpEfCxjP9WnU8rpw" base_NamedElement="_Gj59QHGpEfCxjP9WnU8rpw" id="CL-10" text="The system must allow the user to adjust the brightness of the light actuators." base_Class="_Gj59QHGpEfCxjP9WnU8rpw"/>
+  <Requirements:Requirement xmi:id="_rY5IAHGpEfCxjP9WnU8rpw" base_NamedElement="_rY354HGpEfCxjP9WnU8rpw" id="CL-14" text="The system must provide a menu to allow the usert to configure notifications." base_Class="_rY354HGpEfCxjP9WnU8rpw"/>
 </xmi:XMI>
