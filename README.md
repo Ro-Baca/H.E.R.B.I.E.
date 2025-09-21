@@ -1,2 +1,1 @@
-# HERBIE-Model
-This repository containa the Robot H.E.R.B.I.E. SysML model, using the Eclipse extention Papyrus
+This repository contains the Robot H.E.R.B.I.E. files
