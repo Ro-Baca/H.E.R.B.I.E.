@@ -17,9 +17,10 @@ def main():
             # -- Read sensors data --
             moist_sensor_data = hrb_sensors.get_moist() # Measure moisture
             temp_sensor_data, humid_sensor_data = hrb_sensors.get_temp() # Measure Temperature & Humidity
+            light_sensor_data = hrb_sensors.get_light() # Measure light
             
             # -- Send data using Serial port --
-            hrb_communication.send_data(moist_sensor_data,temp_sensor_data,humid_sensor_data)
+            hrb_communication.send_data(moist_sensor_data,temp_sensor_data,humid_sensor_data, light_sensor_data)
             
             # -- Sleep --
             time.sleep(hrb_config.sleep_interval)
