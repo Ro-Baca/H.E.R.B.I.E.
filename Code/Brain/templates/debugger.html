@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="refresh" content="5">
+    <title>H.E.R.B.I.E. Debugger</title>
+    <style>
+        @import url('https://fonts.cdnfonts.com/css/visitor');
+        
+        /* Contenedor de la página */
+        body {
+            background-color: #E6F0F0;
+            font-family: 'Visitor TT2 BRK', 'Courier New', Courier, monospace;
+            color: #3B4F4F;
+            min-height: 100vh;       /* Altura de la ventana */
+            margin: 0;
+            box-sizing: border-box;  /* Padding en el tamaño total */
+        }
+        
+        /* Contenedor del dashboard */
+        .dashboard {
+            max-height: 700px;
+            position: relative;      
+            box-sizing: border-box;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        
+        .header {
+            position: absolute;      
+            top: 5vw;              
+            left: 2.5vw;             
+            white-space: nowrap;     /* Evita que el texto se rompa en varias líneas */
+        }
+        .header h1 { 
+            font-size: 5vw;        
+            margin: 0; 
+            letter-spacing: 0.2em; 
+        }
+        .header .line { 
+            border-top: 2px solid #3B4F4F; 
+            width: 100%; 
+            margin-top: 0.5vw;       
+        }
+        .header h2 { 
+            font-size: 4vw;        
+            margin: 0.5vw 0 0 1vw;   
+            letter-spacing: 0.1em; 
+            color: #5A7878; 
+        }
+
+        .icon {
+            position: absolute;
+            top: 14vw;               
+            left: 4vw;             
+            width: 10vw;              
+            height: 10vw;             
+            max-width: 75px;         
+            max-height: 75px;        
+            text-align: center;      
+        }
+        .icon img { 
+             width: 100%; 
+             height: 100%; 
+             object-fit: contain; 
+        }
+
+        /* Panel de Sensores */
+        .sensor-panel { 
+            position: absolute; 
+            right: 8vw;            
+            top: 5vw;              
+            width: 35vw;             
+            max-width: 350px;        
+        }
+        .sensor-box, .sensor-title { 
+            background-color: white; 
+            border: 2px solid #BDCCBD; 
+            padding: 1vw 1.5vw;      
+            margin-bottom: 1.2vw;    
+            border-radius: 6px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+        }
+        .sensor-title { 
+            text-align: center; 
+            font-size: 3vw;        
+            letter-spacing: 0.1em; 
+            background-color: #F8FBF8; 
+        }
+        .sensor-box .label { 
+            font-size: 2.5vw;         
+            letter-spacing: 0.05em; 
+            margin: 0; 
+            color: #5A7878; 
+        }
+        .sensor-box .value { 
+            font-size: 2.5vw;        
+            margin: 0.5vw 0 0 0;     
+            text-align: right; 
+        }
+
+        /* ESTILOS PARA EL PANEL DE UMBRALES */
+        .threshold-panel {
+            position: absolute; 
+            top: 25vw;             
+            left: 2.5vw;             
+            
+            background-color: white; 
+            border: 2px solid #BDCCBD; 
+            padding: 1vw 1.5vw;      
+            border-radius: 6px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+            max-width: 280px; /* Limita el ancho del panel */
+        }
+
+        .threshold-title {
+            font-size: 2.5vw; 
+            letter-spacing: 0.1em;
+            color: #5A7878;
+            margin-bottom: 8px;
+            display: block; /* Para que el borde no ocupe todo el ancho */
+            text-align: center; /* Centra el título */
+            font-weight: bold;
+        }
+
+        .threshold-box {
+            font-size: 1.5vw;
+            margin-bottom: 5px;
+            display: flex; /* Pone etiqueta y valor en línea */
+            justify-content: space-between; /* Espacia etiqueta y valor */
+            padding: 2px 5px; /* Añade un poco de padding vertical */
+        }
+
+        .threshold-box span:first-child {
+            color: #5A7878; /* Color de la etiqueta */
+        }
+
+        .threshold-box span:last-child {
+            font-weight: bold; /* Valor en negrita */
+            color: #3B4F4F;
+        }
+
+        /* Debugger = Boton dropdown de emociónes */
+        .debugger { 
+            position: absolute; 
+            top: 20vw;             
+            left: 2.5vw;             
+            display: flex; 
+            align-items: center; 
+        }
+        .debugger-label { 
+            font-size: 2vw;        
+            padding: 1vw 1.5vw;      
+            background-color: #BDCCBD; 
+            border: 2px solid #8DA68D; 
+            border-radius: 6px 0 0 6px; 
+            white-space: nowrap;     
+        }
+        .debugger-select { 
+            font-family: 'Visitor TT2 BRK', monospace;
+            font-size: 2vw;        
+            padding: 1vw;            
+            border: 2px solid #8DA68D; 
+            border-left: none; 
+            border-radius: 0 6px 6px 0; 
+            background-color: white; 
+            color: #3B4F4F; 
+            cursor: pointer; 
+        }
+
+        /* timestamp de actualización */
+        .sensor-box.timestamp {
+            font-size: 2vw;
+            text-align: center;
+            background-color: #f0f0f0;
+            padding: 0.8vw;
+            margin-top: 1vw; 
+        }
+
+        .state-display {
+            position: static; /* Asegura flujo */
+            text-align: center;
+            right: 2vw;
+            font-size: 3vw;
+            margin-bottom: 2vh;
+
+            background-color: white; 
+            border: 2px solid #BDCCBD; 
+            padding: 1vw 1.5vw;      
+            border-radius: 5px; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+        }
+
+        .state-label {
+            color: #5A7878;
+        }
+        
+        .state-value {
+            font-weight: bold;
+            color: #3B4F4F;
+        }
+
+
+        /* Media Queries para telefonos */
+        @media (max-width: 600px) {
+            .dashboard {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                /*justify-content: center;*/
+                height: auto; /* <<< ASEGÚRATE DE ESTO (o quita cualquier 'max-height') */
+                padding: 5vw; /* Mantiene un padding general */
+                width: 100%; /* Ocupa el ancho disponible */
+                box-sizing: border-box; /* Incluye padding en el tamaño */
+                
+            }
+            
+            .header, .icon, .sensor-panel, .debugger {
+                position: static;
+                text-align: center;
+                
+                margin-bottom: 3vh; /* Espacio entre bloques */
+                width: 90%; /* Ancho de los bloques */
+                max-width: 400px; /* Limita el ancho máximo */
+            }
+            
+            .icon { 
+                margin: 3vw auto; 
+                left: auto; 
+                top: auto;
+
+                /* Tamaño fijo */
+                width: 60px; 
+                height: 60px; 
+            }
+            
+            .sensor-panel { 
+                margin-top: 3vw; 
+                right: auto; 
+                top: auto; 
+                width: 90%; 
+                max-width: 400px; 
+            }
+
+            .threshold-panel {
+                position: static; /* Asegura que fluya en columna */
+                width: 90%; 
+                max-width: 400px;
+                margin: 3vh auto;
+                text-align: center; /* Centrar en móvil */
+            }
+            .threshold-box {
+                justify-content: center; /* Centrar items */
+                gap: 10px; /* Espacio entre etiqueta y valor */
+                font-size: 5vw;
+                max-width: none;
+            }
+            .threshold-title {
+                font-size: 6vw;
+                display: block; /* Ocupa todo el ancho */
+                border-bottom: none;
+            }
+            .state-display {
+                position: static; /* Asegura flujo */
+                text-align: center;
+                font-size: 6vw;
+                margin-bottom: 2vh;
+            }
+
+            .sensor-box, .sensor-title { padding: 2vw; margin-bottom: 2vw; }
+            .debugger { bottom: auto; left: auto; }
+            
+            .header h1 { font-size: 12vw; }
+            .header h2 { font-size: 10vw; }
+            .icon { margin: 3vw auto; }
+            .sensor-title { font-size: 10vw; }
+            .sensor-box .label { font-size: 8vw; }
+            .sensor-box .value { font-size: 9vw; }
+            .sensor-box.timestamp { font-size: 8vw; }
+            .debugger-label, .debugger-select { font-size: 6vw; padding: 1.5vw; }
+            
+        }
+
+        /* Media Queries para tablets */
+        @media (min-width: 601px) and (orientation: portrait) {
+
+            .dashboard {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                height: auto; /* <<< ASEGÚRATE DE ESTO (o quita cualquier 'max-height') */
+                padding: 5vw; /* Mantiene un padding general */
+                width: 100%; /* Ocupa el ancho disponible */
+                box-sizing: border-box; /* Incluye padding en el tamaño */
+            }
+            
+            .header, .icon, .sensor-panel, .debugger {
+                position: static; 
+                text-align: center;
+
+                margin-bottom: 3vh; /* Espacio entre bloques */
+                width: 90%; /* Ancho de los bloques */
+                max-width: 400px; /* Limita el ancho máximo */
+            }
+
+            .threshold-panel {
+                position: static; /* Asegura que fluya en columna */
+                width: 90%; 
+                max-width: 400px;
+                margin: 3vh auto;
+                text-align: center; /* Centrar en móvil */
+            }
+            .threshold-box {
+                justify-content: center; /* Centrar items */
+                gap: 10px; /* Espacio entre etiqueta y valor */
+                font-size: 5vw;
+                max-width: none;
+            }
+            .threshold-title {
+                font-size: 6vw;
+                display: block; /* Ocupa todo el ancho */
+                border-bottom: none;
+            }
+
+            .state-display {
+                position: static; /* Asegura flujo */
+                text-align: center;
+                font-size: 6vw;
+                margin-bottom: 2vh;
+            }
+            
+            .debugger-label, .debugger-select { font-size: 3vw; padding: 1.5vw;}
+            .header h1 { font-size: 10vw; }
+            .header h2 { font-size: 6vw; }
+            .sensor-title { font-size: 6vw; }
+            .sensor-box .label { font-size: 5vw; }
+            .sensor-box .value { font-size: 4vw; }
+            .sensor-box.timestamp { font-size: 4vw; }
+            .sensor-panel { width: 60%; } 
+        }
+
+        
+
+        
+    </style>
+</head>
+<body>
+
+    <div class="dashboard">
+        <div class="header">
+            <h1>H.E.R.B.I.E.</h1>
+            <div class="line"></div>
+            <h2>DEBUGGER</h2>
+        </div>
+
+        <div class="icon">
+            <img src="{{ url_for('static', filename='beetle_icon.png') }}" alt="Herbie Icon" style="width: 100%; height: 100%;">
+        </div>
+
+        <div class="state-display">
+            <span class="state-label">Estado:</span>
+            <span class="state-value">{% if data and data.state %}{{ data.state }}{% else %}---{% endif %}</span>
+        </div>
+
+        <div class="sensor-panel">
+            <div class="sensor-title">SENSORES</div>
+            
+            <div class="sensor-box">
+                <p class="label">HUMEDAD SUELO</p>
+                <p class="value">{% if data and data.moisture is not none %}{{ '%.1f' | format(data.moisture) }}{% else %}---{% endif %} %</p>
+            </div>
+            <div class="sensor-box">
+                <p class="label">TEMPERATURA</p>
+                <p class="value">{% if data and data.temperature is not none %}{{ '%.1f' | format(data.temperature) }}{% else %}---{% endif %} °C</p>
+            </div>
+            <div class="sensor-box">
+                <p class="label">HUMEDAD AIRE</p>
+                <p class="value">{% if data and data.humidity is not none %}{{ '%.1f' | format(data.humidity) }}{% else %}---{% endif %} %</p>
+            </div>
+            <div class="sensor-box">
+                <p class="label">LUZ</p>
+                <p class="value">{% if data and data.light is not none %}{{ '%.1f' | format(data.light) }}{% else %}---{% endif %} Lux</p>
+            </div>
+             <div class="sensor-box timestamp">
+                 Actualizado: {% if data and data.timestamp %}{{ data.timestamp }}{% else %}---{% endif %}
+            </div>
+        </div>
+
+        <div class="debugger">
+            <form action="/send_command" method="POST" id="emotion-form">
+                <label class="debugger-label" for="emotion-select">Emoción:</label>
+                <select name="emotion" id="emotion-select" class="debugger-select" onchange="document.getElementById('emotion-form').submit();">
+                    <option value="">-- Manual --</option>
+                    <option value="OK">OK</option>
+                    <option value="DRY">DRY</option>
+                    <option value="HOT">HOT</option>
+                    <option value="COLD">COLD</option>
+                    <option value="SAD">SAD</option>
+                    <option value="TIRED">TIRED</option>
+                    <option value="DEAD">DEAD</option>
+                    <option value="THANKS">THANKS</option>
+                    <option value="STARTUP">STARTUP</option>
+                    <option value="SHUTDOWN">SHUTDOWN</option>
+                </select>
+            </form>
+        </div>
+        <div class="threshold-panel">
+            <div class="threshold-title">UMBRALES</div>
+            <div class="threshold-box">
+                <span>Humedad Mín:</span> 
+                <span>{{ thresholds.MIN_MOISTURE }}%</span>
+            </div>
+            <div class="threshold-box">
+                <span>Temp Máx:</span> 
+                <span>{{ thresholds.MAX_TEMP }}°C</span>
+            </div>
+             <div class="threshold-box">
+                <span>Temp Mín:</span> 
+                <span>{{ thresholds.MIN_TEMP }}°C</span>
+            </div>
+            <div class="threshold-box">
+                <span>Luz Mín:</span> 
+                <span>{{ thresholds.MIN_LIGHT }} Lux</span>
+            </div>
+            <div class="threshold-box">
+                <span>Luz Máx:</span> 
+                <span>{{ thresholds.MAX_LIGHT }} Lux</span>
+            </div>
+        </div>
+    </div> </body>
+</html>
