@@ -14,7 +14,7 @@ BAUD_RATE = 9600
 MIN_MOISTURE = 10.0   # % Humedad Suelo: Por debajo -> DRY
 MAX_TEMP = 50.0       # °C Temperatura: Por encima -> HOT
 MIN_TEMP = 15.0       # °C Temperatura: Por debajo -> COLD
-MIN_LIGHT = 50.0     # Lux Luz: Por debajo -> SAD
+MIN_LIGHT = 10.0     # Lux Luz: Por debajo -> SAD
 MAX_LIGHT = 1000.0   # Lux Luz: Por encima -> TIRED
 
 thresholds = {
@@ -112,6 +112,7 @@ def determine_plant_state(avg_moisture, avg_temp, avg_light, thresholds):
             
     # Si ninguna condición de "problema" se cumplió, todo está OK
     return "OK"
+
 
 def send_state_command(state_name):
     """
