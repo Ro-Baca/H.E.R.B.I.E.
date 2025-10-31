@@ -3,12 +3,13 @@
 import ujson
 import hrb_config
 
-def send_data(moisture,temperature,humidity):
+def send_data(moisture,temperature,humidity,light):
     # Create Python dictionary
     data_dict = {
         "moisture": round(moisture, 1),
         "temperature": temperature,
-        "humidity": humidity
+        "humidity": humidity,
+        "light": round(light, 1) if light is not None else None
     }
 
     # Convert dictionary into a JSON txt string
