@@ -10,7 +10,7 @@
         
         /* Contenedor de la página */
         body {
-            background-color: #E6F0F0;
+            background-color: #DDF1F0;
             font-family: 'Visitor TT2 BRK', 'Courier New', Courier, monospace;
             color: #3B4F4F;
             min-height: 100vh;       /* Altura de la ventana */
@@ -71,13 +71,13 @@
         .sensor-panel { 
             position: absolute; 
             right: 8vw;            
-            top: 5vw;              
+            top: 7vw;              
             width: 35vw;             
             max-width: 350px;        
         }
         .sensor-box, .sensor-title { 
             background-color: white; 
-            border: 2px solid #BDCCBD; 
+            border: 2px solid #BDCC4C; 
             padding: 1vw 1.5vw;      
             margin-bottom: 1.2vw;    
             border-radius: 6px; 
@@ -95,20 +95,39 @@
             margin: 0; 
             color: #5A7878; 
         }
+
+        .sensor-normal { 
+            color: #3B4F4F; /* Tu color de texto normal */
+        }
+        .sensor-warning { 
+            color: #E67E22; /* Un tono naranja bonito */
+        }
+        .sensor-danger { 
+            color: #E74C3C; /* Un tono rojo bonito */
+        }
+
         .sensor-box .value { 
             font-size: 2.5vw;        
             margin: 0.5vw 0 0 0;     
             text-align: right; 
         }
 
+        .sensor-box.timestamp {
+            font-size: 2vw;
+            text-align: center;
+            background-color: #F8FBF8;
+            padding: 0.8vw;
+            margin-top: 1vw; 
+        }
+
         /* ESTILOS PARA EL PANEL DE UMBRALES */
         .threshold-panel {
             position: absolute; 
-            top: 25vw;             
+            top: 27vw;             
             left: 2.5vw;             
             
             background-color: white; 
-            border: 2px solid #BDCCBD; 
+            border: 2px solid #BDCC4C; 
             padding: 1vw 1.5vw;      
             border-radius: 6px; 
             box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
@@ -145,7 +164,7 @@
         /* Debugger = Boton dropdown de emociónes */
         .debugger { 
             position: absolute; 
-            top: 20vw;             
+            top: 22vw;             
             left: 2.5vw;             
             display: flex; 
             align-items: center; 
@@ -153,8 +172,8 @@
         .debugger-label { 
             font-size: 2vw;        
             padding: 1vw 1.5vw;      
-            background-color: #BDCCBD; 
-            border: 2px solid #8DA68D; 
+            background-color: #BDCC4C; 
+            border: 2px solid #BDCC4C; 
             border-radius: 6px 0 0 6px; 
             white-space: nowrap;     
         }
@@ -162,21 +181,12 @@
             font-family: 'Visitor TT2 BRK', monospace;
             font-size: 2vw;        
             padding: 1vw;            
-            border: 2px solid #8DA68D; 
-            border-left: none; 
+            border: 2px solid #BDCC4C; 
+            
             border-radius: 0 6px 6px 0; 
             background-color: white; 
             color: #3B4F4F; 
             cursor: pointer; 
-        }
-
-        /* timestamp de actualización */
-        .sensor-box.timestamp {
-            font-size: 2vw;
-            text-align: center;
-            background-color: #f0f0f0;
-            padding: 0.8vw;
-            margin-top: 1vw; 
         }
 
         .state-display {
@@ -187,7 +197,7 @@
             margin-bottom: 2vh;
 
             background-color: white; 
-            border: 2px solid #BDCCBD; 
+            border: 2px solid #BDCC4C; 
             padding: 1vw 1.5vw;      
             border-radius: 5px; 
             box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
@@ -367,21 +377,82 @@
         <div class="sensor-panel">
             <div class="sensor-title">SENSORES</div>
             
+            {% set WARNING_PERCENT_BUFFER = 0.20 %}
+
+            {% set m_class = 'sensor-normal' %}
+            {% if data and data.moisture is not none %}
+                {% set warning_threshold = thresholds.MIN_MOISTURE * (1 + WARNING_PERCENT_BUFFER) %}
+                
+                {# Comprueba PELIGRO primero #}
+                {% if data.moisture < thresholds.MIN_MOISTURE %}
+                    {% set m_class = 'sensor-danger' %}
+                {# Luego comprueba ADVERTENCIA #}
+                {% elif data.moisture < warning_threshold %}
+                    {% set m_class = 'sensor-warning' %}
+                {% endif %}
+            {% endif %}
+
             <div class="sensor-box">
                 <p class="label">HUMEDAD SUELO</p>
-                <p class="value">{% if data and data.moisture is not none %}{{ '%.1f' | format(data.moisture) }}{% else %}---{% endif %} %</p>
+                <p class="value {{ m_class }}">{% if data and data.moisture is not none %}{{ '%.1f' | format(data.moisture) }}{% else %}---{% endif %} %</p>
             </div>
+
+            {% set t_class = 'sensor-normal' %}
+            {% if data and data.temperature is not none %}
+                {# Lógica para CALOR #}
+                {% set warning_threshold_hot = thresholds.MAX_TEMP * (1 - WARNING_PERCENT_BUFFER) %}
+                
+                {% if data.temperature > thresholds.MAX_TEMP %}
+                    {% set t_class = 'sensor-danger' %}
+                {% elif data.temperature > warning_threshold_hot %}
+                    {% set t_class = 'sensor-warning' %}
+
+                {# Lógica para FRÍO #}
+                {% else %}
+                    {% set warning_threshold_cold = thresholds.MIN_TEMP * (1 + WARNING_PERCENT_BUFFER) %}
+                    
+                    {% if data.temperature < thresholds.MIN_TEMP %}
+                        {% set t_class = 'sensor-danger' %}
+                    {% elif data.temperature < warning_threshold_cold %}
+                        {% set t_class = 'sensor-warning' %}
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+
             <div class="sensor-box">
                 <p class="label">TEMPERATURA</p>
-                <p class="value">{% if data and data.temperature is not none %}{{ '%.1f' | format(data.temperature) }}{% else %}---{% endif %} °C</p>
+                <p class="value {{ t_class }}">{% if data and data.temperature is not none %}{{ '%.1f' | format(data.temperature) }}{% else %}---{% endif %} °C</p>
             </div>
             <div class="sensor-box">
                 <p class="label">HUMEDAD AIRE</p>
                 <p class="value">{% if data and data.humidity is not none %}{{ '%.1f' | format(data.humidity) }}{% else %}---{% endif %} %</p>
             </div>
+
+            {% set l_class = 'sensor-normal' %}
+            {% if data and data.light is not none %}
+                {# Lógica para CANSADO (mucha luz) #}
+                {% set warning_threshold_tired = thresholds.MAX_LIGHT * (1 - WARNING_PERCENT_BUFFER) %}
+                
+                {% if data.light > thresholds.MAX_LIGHT %}
+                    {% set l_class = 'sensor-danger' %}
+                {% elif data.light > warning_threshold_tired %}
+                    {% set l_class = 'sensor-warning' %}
+                    
+                {# Lógica para TRISTE (poca luz) #}
+                {% else %}
+                    {% set warning_threshold_sad = thresholds.MIN_LIGHT * (1 + WARNING_PERCENT_BUFFER) %}
+                    
+                    {% if data.light < thresholds.MIN_LIGHT %}
+                        {% set l_class = 'sensor-danger' %}
+                    {% elif data.light < warning_threshold_sad %}
+                        {% set l_class = 'sensor-warning' %}
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+
             <div class="sensor-box">
                 <p class="label">LUZ</p>
-                <p class="value">{% if data and data.light is not none %}{{ '%.1f' | format(data.light) }}{% else %}---{% endif %} Lux</p>
+                <p class="value {{ l_class }}">{% if data and data.light is not none %}{{ '%.1f' | format(data.light) }}{% else %}---{% endif %} Lux</p>
             </div>
              <div class="sensor-box timestamp">
                  Actualizado: {% if data and data.timestamp %}{{ data.timestamp }}{% else %}---{% endif %}
