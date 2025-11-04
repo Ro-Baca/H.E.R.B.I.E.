@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio{% endblock %}
+
+{% block page_title %}INICIO{% endblock %}
+
+{% block profile_display %}
+<div class="profile-display">
+    Perfil: <span>{{ config.selected_plant_profile }}</span>
+</div>
+{% endblock %}
+
+{% block content %}
+
+    <div class="state-display">
+        <span class="state-label">ESTADO: </span>
+        <span class="state-value">
+            {% if data and data.state %}{{ data.state }}{% else %}---{% endif %}
+        </span>
+    </div>
+
+    <div class="sensor-panel">
+        
+        {% set m_class = 'sensor-normal' %}
+        {% if data and data.moisture is not none %}
+            {% if data.moisture < thresholds.MIN_MOISTURE %}
+                {% set m_class = 'sensor-danger' %}
+            {% elif data.moisture < (thresholds.MIN_MOISTURE * 1.2) %}
+                {% set m_class = 'sensor-warning' %}
+            {% endif %}
+        {% endif %}
+        <div class="sensor-box">
+            <p class="label">HUMEDAD SUELO</p>
+            <p class="value {{ m_class }}">
+                {% if data and data.moisture is not none %}{{ '%.1f' | format(data.moisture) }}<span style="font-size: 2vw;"> %</span>{% else %}---{% endif %}
+            </p>
+        </div>
+        
+        {% set t_class = 'sensor-normal' %}
+        {% if data and data.temperature is not none %}
+            {% if data.temperature > thresholds.MAX_TEMP or data.temperature < thresholds.MIN_TEMP %}
+                {% set t_class = 'sensor-danger' %}
+            {% elif data.temperature > (thresholds.MAX_TEMP * 0.8) or data.temperature < (thresholds.MIN_TEMP * 1.2) %}
+                {% set t_class = 'sensor-warning' %}
+            {% endif %}
+        {% endif %}
+        <div class="sensor-box">
+            <p class="label">TEMPERATURA</p>
+            <p class="value {{ t_class }}">
+                {% if data and data.temperature is not none %}{{ '%.1f' | format(data.temperature) }}<span style="font-size: 2vw;"> °C</span>{% else %}---{% endif %}
+            </p>
+        </div>
+
+        {% set l_class = 'sensor-normal' %}
+        {% if data and data.light is not none %}
+            {% if data.light > thresholds.MAX_LIGHT or data.light < thresholds.MIN_LIGHT %}
+                {% set l_class = 'sensor-danger' %}
+            {% elif data.light > (thresholds.MAX_LIGHT * 0.8) or data.light < (thresholds.MIN_LIGHT * 1.2) %}
+                {% set l_class = 'sensor-warning' %}
+            {% endif %}
+        {% endif %}
+        <div class="sensor-box">
+            <p class="label">LUZ</p>
+            <p class="value {{ l_class }}">
+                {% if data and data.light is not none %}{{ '%.0f' | format(data.light) }}<span style="font-size: 2vw;"> Lux</span>{% else %}---{% endif %}
+            </p>
+        </div>
+
+        <div class="sensor-box timestamp">
+             ACTUALIZADO: {% if data and data.timestamp %}{{ data.timestamp }}{% else %}---{% endif %}
+        </div>
+    </div>
+
+{% endblock %}

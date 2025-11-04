@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>H.E.R.B.I.E. - {% block title %}Inicio{% endblock %}</title>
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    
+    {% block page_styles %}{% endblock %}
+</head>
+<body>
+    <div class="dashboard">
+        
+        <div class="left-column"> <div class="header">
+                <h1>H.E.R.B.I.E.</h1>
+                <div class="line"></div>
+            </div>
+            
+            <div class="page-title">{% block page_title %}INICIO{% endblock %}</div>
+            
+            {% block profile_display %}{% endblock %}
+
+            <div class="navigation-panel">
+                <div class="nav-icon">
+                    <a href="/" class="{{ 'active' if active_page == 'inicio' else '' }}">
+                        <img src="{{ url_for('static', filename='icon_home.png') }}" alt="Inicio">
+                    </a>
+                </div>
+                <div class="nav-icon">
+                    <a href="/stats" class="{{ 'active' if active_page == 'stats' else '' }}">
+                        <img src="{{ url_for('static', filename='icon_stats.png') }}" alt="Estadísticas">
+                    </a>
+                </div>
+                <div class="nav-icon">
+                    <a href="/tips" class="{{ 'active' if active_page == 'tips' else '' }}">
+                        <img src="{{ url_for('static', filename='icon_help.png') }}" alt="Consejos">
+                    </a>
+                </div>
+                <div class="nav-icon">
+                    <a href="/config" class="{{ 'active' if active_page == 'config' else '' }}">
+                        <img src="{{ url_for('static', filename='icon_config.png') }}" alt="Configuración">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="main-content">
+            {% block content %}{% endblock %}
+        </div>
+        </div> 
+    
+    {% block page_scripts %}{% endblock %}
+</body>
+</html>

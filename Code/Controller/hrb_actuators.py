@@ -4,22 +4,38 @@ import utime
 import hrb_config
 from ws2812 import WS2812
 
-# --- Buzzer config ---
+# --- Configuration Values ---
 buzzer_pwm = None
-VOLUME = 32768  # 50%
+VOLUME = 32768  # 50% by default
+BRIGHTNESS = 0.5 # 50% by default
 
-# --- LED config ---
-strip = None
-BRIGHTNESS = 0.5 # 50%
-
+# --- Colors ---
 BLACK = [0, 0, 0]
-RED = [int(255 * BRIGHTNESS), 0, 0]
-YELLOW = [int(255 * BRIGHTNESS), int(150 * BRIGHTNESS), 0]
-BLUE = [0, 0, int(255 * BRIGHTNESS)]
-ORANGE = [int(255 * BRIGHTNESS), int(60 * BRIGHTNESS), 0]
-MAGENTA = [int(255 * BRIGHTNESS), 0, int(255 * BRIGHTNESS)]
-CYAN = [0, int(255 * BRIGHTNESS), int(255 * BRIGHTNESS)]
-GREEN = [0, int(255 * BRIGHTNESS), 0]
+BLACK = [0, 0, 0]
+RED, YELLOW, BLUE, ORANGE, MAGENTA, CYAN, GREEN = [BLACK]*7
+
+# --- Config values update ---
+def update_volume(level):
+    """Updates global volume (0.0 a 1.0)"""
+    global VOLUME
+    
+    VOLUME = int(level * 65535)
+    print(f"Volume updated: {level} ({VOLUME})")
+
+def update_brightness(level):
+    """Updates flobal brightness and recalculates color"""
+    global BRIGHTNESS, RED, YELLOW, BLUE, ORANGE, MAGENTA, CYAN, GREEN
+    
+    BRIGHTNESS = max(0.0, min(1.0, level)) 
+    
+    RED = [int(255 * BRIGHTNESS), 0, 0]
+    YELLOW = [int(255 * BRIGHTNESS), int(150 * BRIGHTNESS), 0]
+    BLUE = [0, 0, int(255 * BRIGHTNESS)]
+    ORANGE = [int(255 * BRIGHTNESS), int(60 * BRIGHTNESS), 0]
+    MAGENTA = [int(255 * BRIGHTNESS), 0, int(255 * BRIGHTNESS)]
+    CYAN = [0, int(255 * BRIGHTNESS), int(255 * BRIGHTNESS)]
+    GREEN = [0, int(255 * BRIGHTNESS), 0]
+    print(f"Brillo actualizado a {level}")
 
 # --- Initialization ---
 def init_actuators():
@@ -30,7 +46,7 @@ def init_actuators():
         buzzer_pwm = machine.PWM(machine.Pin(hrb_config.buzzer_pin))
         buzzer_pwm.duty_u16(0) # Buzzer off
     except Exception as e:
-        print(f"Error initializating buzzer: {e}")
+        print(f"ERROR initializating buzzer: {e}")
     
     # Init NeoPixel
     try:
@@ -38,6 +54,9 @@ def init_actuators():
         led_turn_off() # Leds off
     except Exception as e:
         print(f"Error initializating NeoPixel: {e}")
+
+    update_brightness(BRIGHTNESS)
+    led_turn_off() # Leds off
 
 # --- Hard Stop function
 def off():
@@ -105,10 +124,7 @@ def led_fill(color):
 
 def led_turn_off():
     """LEDs off"""
-    if strip:
-        for i in range(hrb_config.led_count):
-            strip[i] = BLACK
-        strip.write()
+    led_fill(BLACK)
 
 def led_startup():
     """Startup sequence"""

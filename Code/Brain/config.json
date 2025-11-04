@@ -1,0 +1,8 @@
+{
+  "selected_plant_profile": "Default",
+  "buzzer_volume": 0.5,
+  "led_brightness": 0.5,
+  "AVR_WIN": 5,
+  "SERIAL_PORT": "/dev/ttyS0",
+  "BAUD_RATE": 9600
+}

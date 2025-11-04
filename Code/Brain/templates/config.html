@@ -1,0 +1,241 @@
+{% extends "base.html" %}
+
+{% block title %}Configuración{% endblock %}
+
+{% block page_title %}CONFIGURACION{% endblock %}
+
+{% block page_styles %}
+<style>
+    .config-form {
+        position: absolute;
+        top: 4vw;
+        /* Ajusté el 'left' para que 'main-content' 
+          ocupe el espacio correcto 
+        */
+        left: 0; 
+        width: 70vw;
+        max-width: 600px;
+    }
+
+    /* Fila para la selección de planta */
+    .form-row-plant {
+        display: flex;
+        align-items: center;
+        gap: 1vw;
+        margin-bottom: 2vw;
+    }
+    .form-row-plant label {
+        font-size: 2vw;
+        color: #3B4F4F;
+        background-color: #BDCC4C;
+        padding: 0.8vw 1vw;
+        border-radius: 6px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .form-row-plant select {
+        font-family: 'Visitor TT2 BRK', monospace;
+        font-size: 2vw;
+        border: 2px solid #BDCC4C;
+        border-radius: 6px;
+        padding: 0.5vw;
+        background: white;
+        color: #3B4F4F;
+        width: 25vw;
+    }
+
+    /* Grid para los cuadros de abajo */
+    .form-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        gap: 2vw;
+    }
+
+    /* Estilo para las cajas de Volumen, Brillo, Freq. */
+    .config-box {
+        background-color: white;
+        border: 2px solid #BDCC4C;
+        border-radius: 6px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        text-align: center;
+        padding-bottom: 1vw;
+    }
+    .config-box .label {
+        font-size: 2.2vw;
+        letter-spacing: 0.1em;
+        color: #3B4F4F;
+        background-color: #BDCC4C;
+        display: block;
+        padding: 0.5vw;
+        border-radius: 4px 4px 0 0;
+    }
+    .config-box .value {
+        font-size: 4vw;
+        font-weight: bold;
+        margin: 1vw 0;
+    }
+    .config-box input[type="range"] {
+        width: 80%;
+        margin-top: 0.5vw;
+    }
+    
+    /* --- Estilos para la caja de Freq. (centrado) --- */
+    .config-box-freq .value-container {
+        display: flex;
+        justify-content: center; /* Centra horizontalmente */
+        align-items: baseline;   /* Alinea la base del número y la 's' */
+        margin: 1vw 0;
+        font-size: 4vw;
+        font-weight: bold;
+    }
+    .config-box-freq input[type="number"] {
+        font-family: 'Visitor TT2 BRK', monospace;
+        font-size: inherit; /* Hereda el 4vw del contenedor */
+        font-weight: inherit;
+        color: #3B4F4F;
+        border: none;
+        width: 3ch; /* Ancho justo para ~2 dígitos */
+        text-align: right; /* Alinea a la derecha para que esté pegado a la 's' */
+        background: none;
+        padding: 0;
+        margin: 0;
+    }
+    .config-box-freq input[type=number]::-webkit-inner-spin-button, 
+    .config-box-freq input[type=number]::-webkit-outer-spin-button { 
+        -webkit-appearance: none; 
+        margin: 0; 
+    }
+    .config-box-freq input[type=number] { -moz-appearance: textfield; }
+
+    .config-box-freq .unit {
+        margin-left: 0.2ch; /* Pequeño espacio */
+    }
+    /* --- Fin estilos Freq. --- */
+
+
+    /* Estilo para el botón de Guardar */
+    .form-row-save {
+        grid-column: 2;
+        grid-row: 2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .save-button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        width: 8vw;
+        height: 8vw;
+        max-width: 60px;
+        max-height: 60px;
+    }
+    .save-button img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        filter: grayscale(100%) opacity(0.7);
+        transition: filter 0.2s;
+    }
+    .save-button:hover img {
+        filter: grayscale(50%) opacity(1);
+    }
+    
+    /* Ajustes para Móvil (solo los que afectan al formulario) */
+    @media (orientation: portrait) {
+        .config-form {
+            position: static;
+            width: 90%;
+            margin: 0 auto;
+        }
+        .form-row-plant { flex-direction: column; }
+        .form-row-plant label { font-size: 5vw; width: 80%; text-align: center;}
+        .form-row-plant select { font-size: 5vw; width: 80%; }
+        .form-grid {
+            grid-template-columns: 1fr; /* Una columna */
+            width: 90%;
+            margin: 2vw auto;
+        }
+        .config-box .label { font-size: 6vw; }
+        .config-box .value { font-size: 10vw; }
+        .config-box-freq .value-container { font-size: 10vw; }
+        
+        .form-row-save {
+            grid-column: 1;
+            grid-row: auto;
+            margin-top: 2vw;
+        }
+        .save-button { width: 15vw; height: 15vw; }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="config-form">
+    <form action="/save_config" method="POST">
+        
+        <div class="form-row-plant">
+            <label for="plant_profile">Planta:</label>
+            <select name="plant_profile" id="plant_profile">
+                {% for plant in available_plants %}
+                    <option value="{{ plant }}" 
+                            {% if plant == current_config.selected_plant_profile %}selected{% endif %}>
+                        {{ plant }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-grid">
+            
+            <div class="config-box config-box-vol">
+                <div class="label">Volumen</div>
+                <div class="value" id="volume-readout">
+                    {{ (current_config.buzzer_volume * 100) | int }}%
+                </div>
+                <input type="range" name="buzzer_volume" min="0.0" max="1.0" step="0.1"
+                       value="{{ current_config.buzzer_volume }}"
+                       oninput="updateReadout('volume-readout', this.value, '%')">
+            </div>
+
+            <div class="config-box config-box-freq">
+                <div class="label">Freq. medición</div>
+                <div class="value-container">
+                    <input type="number" name="AVR_WIN" min="1" max="60"
+                           value="{{ current_config.AVR_WIN }}">
+                    <span class="unit">s</span>
+                </div>
+            </div>
+
+            <div class="config-box config-box-bright">
+                <div class="label">Brillo</div>
+                <div class="value" id="brightness-readout">
+                    {{ (current_config.led_brightness * 100) | int }}%
+                </div>
+                <input type="range" name="led_brightness" min="0.0" max="1.0" step="0.1"
+                       value="{{ current_config.led_brightness }}"
+                       oninput="updateReadout('brightness-readout', this.value, '%')">
+            </div>
+
+            <div class="form-row-save">
+                <button type="submit" class="save-button" title="Guardar">
+                    <img src="{{ url_for('static', filename='icon_save.png') }}" alt="Guardar">
+                </button>
+            </div>
+
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+
+{% block page_scripts %}
+<script>
+    function updateReadout(elementId, value, unit) {
+        let readout = document.getElementById(elementId);
+        if (unit === '%') {
+            readout.textContent = Math.round(value * 100) + '%';
+        }
+    }
+</script>
+{% endblock %}
